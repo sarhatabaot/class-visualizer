@@ -10,7 +10,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
  */
 public final class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 
-    private final static Color TREE_SELECTION_BG_COLOR = new Color( 0x87CEFA ); // LightSkyBlue
+    private static final Color TREE_SELECTION_BG_COLOR = new Color( 0x87CEFA ); // LightSkyBlue
 
     public CustomTreeCellRenderer() {
         setLeafIcon( null );

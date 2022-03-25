@@ -159,10 +159,10 @@ class SideGraphLayoutBuilder {
         int centerY = areaHeight / 2;
 
         // Position vertices
-        positionRowVertices( rowTopVerts, VertexPlacement.Top, areaWidth, areaHeight, cellSpacing );
-        positionRowVertices( rowBottomVerts, VertexPlacement.Bottom, areaWidth, areaHeight, cellSpacing );
-        positionColumnVertices( colLeftVerts, VertexPlacement.Left, areaWidth, areaHeight, cellSpacing );
-        positionColumnVertices( colRightVerts, VertexPlacement.Right, areaWidth, areaHeight, cellSpacing );
+        positionRowVertices( rowTopVerts, VertexPlacement.TOP, areaWidth, areaHeight, cellSpacing );
+        positionRowVertices( rowBottomVerts, VertexPlacement.BOTTOM, areaWidth, areaHeight, cellSpacing );
+        positionColumnVertices( colLeftVerts, VertexPlacement.LEFT, areaWidth, areaHeight, cellSpacing );
+        positionColumnVertices( colRightVerts, VertexPlacement.RIGHT, areaWidth, areaHeight, cellSpacing );
         mainClassVertex.setLocation( centerX - mainClassVertex.width / 2, centerY - mainClassVertex.height / 2 );
         positionEdges( edges, cellSpacing );
 
@@ -194,7 +194,7 @@ class SideGraphLayoutBuilder {
 
         // Position vertices
         for (Vertex vertex : vertices) {
-            int y = (placement == VertexPlacement.Top)
+            int y = (placement == VertexPlacement.TOP)
                     ? maxHeight - vertex.height // top row
                     : areaHeight - maxHeight; // bottom row
             vertex.setLocation( currX, y );
@@ -217,7 +217,7 @@ class SideGraphLayoutBuilder {
 
         // Position vertices
         for (Vertex vertex : vertices) {
-            int x = (placement == VertexPlacement.Left)
+            int x = (placement == VertexPlacement.LEFT)
                     ? maxWidth - vertex.width // left column
                     : areaWidth - maxWidth; // right column
             vertex.setLocation( x, currY );

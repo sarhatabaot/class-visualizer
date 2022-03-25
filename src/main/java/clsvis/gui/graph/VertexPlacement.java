@@ -6,9 +6,9 @@ package clsvis.gui.graph;
  * @author Jonatan Kazmierczak [Jonatan (at) Son-of-God.info]
  */
 enum VertexPlacement {
-    Left,
-    Right,
-    Top,
-    Bottom,
-    Center,
+    LEFT,
+    RIGHT,
+    TOP,
+    BOTTOM,
+    CENTER,
 }

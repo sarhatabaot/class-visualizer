@@ -4,6 +4,7 @@ import clsvis.gui.ColorContext;
 import clsvis.model.Class_;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.tree.TreeNode;
 
 /**
@@ -81,7 +82,7 @@ public class ClassPresentationWrapper implements TreeNode {
             return false;
         }
         final ClassPresentationWrapper other = (ClassPresentationWrapper) obj;
-        return !(this.class_ != other.class_ && (this.class_ == null || !this.class_.equals( other.class_ )));
+        return Objects.equals(this.class_, other.class_);
     }
 
     @Override

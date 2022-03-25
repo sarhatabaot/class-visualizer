@@ -30,24 +30,16 @@ public abstract class BaseTask<T, V> extends SwingWorker<T, V> {
     private void addPropertyChangeListener() {
         addPropertyChangeListener( (PropertyChangeEvent event) -> {
             switch (event.getPropertyName()) {
-                case "state":
-                    onStateChange( (StateValue) event.getNewValue() );
-                    break;
-                case "progress":
-                    onProgressGuiUpdate( (int) event.getNewValue() );
-                    break;
+                case "state" -> onStateChange((StateValue) event.getNewValue());
+                case "progress" -> onProgressGuiUpdate((int) event.getNewValue());
             }
         } );
     }
 
     private void onStateChange(StateValue state) {
         switch (state) {
-            case STARTED:
-                beforeStartedGuiUpdate();
-                break;
-            case DONE:
-                afterDoneGuiUpdate();
-                break;
+            case STARTED -> beforeStartedGuiUpdate();
+            case DONE -> afterDoneGuiUpdate();
         }
     }
 
