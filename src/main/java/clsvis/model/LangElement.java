@@ -52,7 +52,7 @@ public abstract class LangElement implements Comparable<LangElement> {
         if (shortTypeName == null || shortTypeName.length() == 0) {
             shortTypeName = this.fullTypeName; // anonymous class
         }		// for generics and anonymous: remove all package paths
-        this.shortTypeName = shortTypeName.replaceAll( "\\w+[\\.\\$](?!\\d+)", "" );
+        this.shortTypeName = shortTypeName.replaceAll( "\\w+[.$](?!\\d+)", "" );
     }
 
     public boolean isAbstract() {
@@ -116,7 +116,7 @@ public abstract class LangElement implements Comparable<LangElement> {
 
     @Override
     public boolean equals(Object other) {
-        return id.equals( (other != null && other instanceof LangElement) ? ((LangElement) other).id : null );
+        return id.equals( (other instanceof LangElement) ? ((LangElement) other).id : null );
     }
 
     @Override

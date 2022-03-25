@@ -69,15 +69,15 @@ class SideGraphLayoutBuilder {
 
         // Main class placed in center row and center column
         // SuperClasses and superInterfaces
-        Collection<Vertex> rowTopVerts = new ArrayList<Vertex>( 0x10 );
+        Collection<Vertex> rowTopVerts = new ArrayList<>(0x10);
         // Main class
-        Collection<Vertex> rowCenterVerts = new ArrayList<Vertex>( 1 );
+        Collection<Vertex> rowCenterVerts = new ArrayList<>(1);
         // SubClasses and SubInterfaces
-        Collection<Vertex> rowBottomVerts = new ArrayList<Vertex>( 0x80 );
+        Collection<Vertex> rowBottomVerts = new ArrayList<>(0x80);
         // Classes referenced from main one
-        Collection<Vertex> colLeftVerts = new ArrayList<Vertex>( 0x200 );
+        Collection<Vertex> colLeftVerts = new ArrayList<>(0x200);
         // Classes referencing main one
-        Collection<Vertex> colRightVerts = new ArrayList<Vertex>( 0x200 );
+        Collection<Vertex> colRightVerts = new ArrayList<>(0x200);
         // Decision table of all vertices - the same number of elems as relationTypes
         Collection[] verticesTbl = {
             rowBottomVerts, rowBottomVerts,
@@ -87,11 +87,11 @@ class SideGraphLayoutBuilder {
         };
 
         // Used classes - to avoid painting the same class more than once
-        Collection<Class_> usedClasses = new HashSet<Class_>();
+        Collection<Class_> usedClasses = new HashSet<>();
 
         // Create 2 collections containing half of SuperInterfaces each
-        Collection<Class_> generalizations1 = new ArrayList<Class_>( 8 );
-        Collection<Class_> generalizations2 = new ArrayList<Class_>( 8 );
+        Collection<Class_> generalizations1 = new ArrayList<>(8);
+        Collection<Class_> generalizations2 = new ArrayList<>(8);
         Collection<Class_> superInterfaces = class_.getRelations( RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND);
         int generCount = superInterfaces.size();
         int generIdx = 0;
@@ -227,7 +227,7 @@ class SideGraphLayoutBuilder {
 
     private static void positionEdges(Collection<Edge> edges, int cellSpacing) {
         for (Edge edge : edges) {
-            ArrayList<Shape> connector = new ArrayList<Shape>( 3 );
+            ArrayList<Shape> connector = new ArrayList<>(3);
             // Relation line
             int x1, y1, x2, y2;
             Path2D path = new Path2D.Double();
@@ -243,8 +243,8 @@ class SideGraphLayoutBuilder {
                 int x3 = x2;
                 int y3 = y2 - cellSpacing;
                 path.moveTo( x3, y3 );
-                path.lineTo( x3 - cellSpacing / 2, y2 );
-                path.lineTo( x3 + cellSpacing / 2, y2 );
+                path.lineTo( x3 - cellSpacing / 2d, y2 );
+                path.lineTo( x3 + cellSpacing / 2d, y2 );
                 path.closePath();
             } else {
                 // Horizontal
@@ -273,9 +273,9 @@ class SideGraphLayoutBuilder {
                         .contains( edge.fromVertex.class_ )) {
                     // 2 pixels shift to avoid accidental connections
                     path.moveTo( x3, y3 );
-                    path.lineTo( x2 + 3, y3 - cellSpacing / 2 );
+                    path.lineTo( x2 + 3d, y3 - cellSpacing / 2d );
                     path.moveTo( x3, y3 );
-                    path.lineTo( x2 + 3, y3 + cellSpacing / 2 );
+                    path.lineTo( x2 + 3d, y3 + cellSpacing / 2d );
                 }
                 // Starting line
                 int x4 = x1 - cellSpacing;
@@ -350,7 +350,7 @@ class SideGraphLayoutBuilder {
         if (tooManyClasses) {
             createVertexAndEdge(
                     mainClassVertex.class_, relationType, direction, position, mainClassVertex, vertices, edges, cellPadding,
-                    classFM, abstractClassFM, String.valueOf( targetClasses.size() ) + " classes" );
+                    classFM, abstractClassFM, targetClasses.size() + " classes" );
         } else {
             // Process target classes
             for (Class_ targetClass : targetClasses) {

@@ -59,7 +59,7 @@ public final class GraphComponent extends JPanel implements Scrollable {
             1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[]{ 10.0f }, 0.0f );
     private static final SideGraphLayoutBuilder layoutBuilder = new SideGraphLayoutBuilder();
 
-    private static final Map<RelationType, Color> relationColors = new EnumMap<RelationType, Color>( RelationType.class );
+    private static final Map<RelationType, Color> relationColors = new EnumMap<>(RelationType.class);
 
     // Properties
     private final int size = 12;
@@ -77,8 +77,8 @@ public final class GraphComponent extends JPanel implements Scrollable {
     // Attributes
     private final int cellPadding = size;
     private final int cellSpacing = size;
-    private List<Vertex> vertices = Collections.EMPTY_LIST;
-    private List<Edge> edges = Collections.EMPTY_LIST;
+    private List<Vertex> vertices = Collections.emptyList();
+    private List<Edge> edges = Collections.emptyList();
 
     static {
         for (RelationType relationType : RelationType.values()) {
@@ -111,8 +111,8 @@ public final class GraphComponent extends JPanel implements Scrollable {
 
     private void prepareLayout() {
         logger.finest( "---- prepareLayout" );
-        vertices = new ArrayList<Vertex>( 0x400 );
-        edges = new ArrayList<Edge>( 0x400 );
+        vertices = new ArrayList<>(0x400);
+        edges = new ArrayList<>(0x400);
         Dimension graphSize = getPreferredSize();
         layoutBuilder.buildGraphLayout(
                 mainClass,
@@ -291,10 +291,9 @@ public final class GraphComponent extends JPanel implements Scrollable {
             if (logger.isLoggable( Level.FINEST )) {
                 logger.finest( this.getClass().getSimpleName() + ".createTransferable" );
             }
-            if (!(comp instanceof GraphComponent)) {
+            if (!(comp instanceof GraphComponent graphComponent)) {
                 throw new IllegalStateException( "Unsupported component type: " + comp.getClass().getName() );
             }
-            GraphComponent graphComponent = (GraphComponent) comp;
             Dimension size = graphComponent.getPreferredSize();
             BufferedImage image = new BufferedImage( size.width, size.height, BufferedImage.TYPE_INT_RGB );
             Graphics2D g = image.createGraphics();

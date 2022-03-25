@@ -10,8 +10,10 @@ import java.awt.Rectangle;
  */
 class Vertex extends Rectangle {
 
-    public int textX, textY; // coordinates of text
-    public final int textYShift, cellPadding;
+    public int textX;
+    public int textY; // coordinates of text
+    public final int textYShift;
+    public final int cellPadding;
     public final Class_ class_;
     public boolean main;
     /** Optional title - text shown instead of class name. */

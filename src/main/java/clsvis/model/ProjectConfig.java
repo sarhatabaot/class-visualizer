@@ -86,10 +86,7 @@ public final class ProjectConfig {
         if (!Objects.equals( this.classPaths, other.classPaths )) {
             return false;
         }
-        if (!Objects.equals( this.importPaths, other.importPaths )) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.importPaths, other.importPaths);
     }
 
     @Override

@@ -79,8 +79,7 @@ public class Class_ extends ParameterizableElement {
     }
 
     public void addMember(ParameterizableElement element) {
-        ElementKind memberKind = element.kind;
-        List<ParameterizableElement> members = membersMap.computeIfAbsent(memberKind, k -> new LinkedList<>());
+        List<ParameterizableElement> members = membersMap.computeIfAbsent(element.kind, k -> new LinkedList<>());
         members.add( element );
     }
 
@@ -169,7 +168,7 @@ public class Class_ extends ParameterizableElement {
      * Returns short name following by type parameters (if exist).
      */
     public String getShortNameWithParams() {
-        return getWithParams( name ).replaceAll( "\\w+[\\.\\$](?!\\d+)", "" );
+        return getWithParams( name ).replaceAll( "\\w+[.\\$](?!\\d+)", "" );
     }
 
     public String getFullNameWithParams() {

@@ -107,13 +107,11 @@ public abstract class StructureBuilder {
                 title + " <span color=green>(" + elements.size() + ")</span>" );
         for (LangElement element : elements) {
             DefaultMutableTreeNode elementNode = new DefaultMutableTreeNode( element );
-            if (withAnnotations && element instanceof ParameterizableElement) {
-                ParameterizableElement parameterizableElement = (ParameterizableElement) element;
+            if (withAnnotations && element instanceof ParameterizableElement parameterizableElement) {
                 buildElementTreeNode( parameterizableElement.annotations,
                         MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.ANNOTATIONS.titleWithSymbolStr, elementNode, false );
             }
-            if (element instanceof Operation) {
-                Operation operation = (Operation) element;
+            if (element instanceof Operation operation) {
                 buildElementTreeNode( operation.parameters,
                         MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.PARAMETERS.titleWithSymbolStr, elementNode, true );
                 buildElementTreeNode( operation.throwables,

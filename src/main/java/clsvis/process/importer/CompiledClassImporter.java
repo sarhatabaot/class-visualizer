@@ -131,7 +131,7 @@ public class CompiledClassImporter {
         }
     }
 
-    private static Method createMemberMethod(String suffix, Class memberClass, Class... paramTypes) {
+    private static Method createMemberMethod(String suffix, Class memberClass, Class... paramTypes) throws UnsupportedOperationException{
         try {
             return memberClass.getMethod( "is" + suffix, paramTypes );
         } catch (Exception e) {
@@ -679,8 +679,7 @@ public class CompiledClassImporter {
             for (Annotation_ annotation_ : element.annotations) {
                 addRelation( class_, annotation_.originalTypeName, RelationType.DEPENDENCY_ANNOTATION);
             }
-            if (element instanceof Operation) {
-                Operation operation = (Operation) element;
+            if (element instanceof Operation operation) {
                 addRelations( class_, operation.parameters, RelationType.DEPENDENCY);
                 addRelations( class_, operation.throwables, RelationType.DEPENDENCY_THROWS);
             }
