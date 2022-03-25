@@ -110,15 +110,15 @@ class SideGraphLayoutBuilder {
         // Top row
         createVerticesAndEdges(
                 generalizations1, usedClasses,
-                RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND, EdgePosition.Vertical,
+                RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND, EdgePosition.VERTICAL,
                 mainClassVertex, rowTopVerts, edges, cellPadding, cellSpacing, classFM, abstractClassFM );
         createVerticesAndEdges(
                 class_.getRelations( RelationType.SUPER_CLASS, RelationDirection.OUTBOUND), usedClasses,
-                RelationType.SUPER_CLASS, RelationDirection.OUTBOUND, EdgePosition.Vertical,
+                RelationType.SUPER_CLASS, RelationDirection.OUTBOUND, EdgePosition.VERTICAL,
                 mainClassVertex, rowTopVerts, edges, cellPadding, cellSpacing, classFM, abstractClassFM );
         createVerticesAndEdges(
                 generalizations2, usedClasses,
-                RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND, EdgePosition.Vertical,
+                RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND, EdgePosition.VERTICAL,
                 mainClassVertex, rowTopVerts, edges, cellPadding, cellSpacing, classFM, abstractClassFM );
         // Remaining elements
         for (int i = 0; i < relationTypes.length; i++) {
@@ -306,7 +306,7 @@ class SideGraphLayoutBuilder {
                     || edge.relationType == RelationType.DEPENDENCY
                     || edge.relationType == RelationType.DEPENDENCY_THROWS
                     || edge.relationType == RelationType.DEPENDENCY_ANNOTATION
-                            ? EdgeLineStyle.Dashed : EdgeLineStyle.Solid;
+                            ? EdgeLineStyle.DASHED : EdgeLineStyle.SOLID;
         } // for edges
     }
 
@@ -392,7 +392,7 @@ class SideGraphLayoutBuilder {
 
     private static EdgePosition getEdgePosition(RelationType relType) {
         return relType == RelationType.SUPER_CLASS || relType == RelationType.SUPER_INTERFACE
-                ? EdgePosition.Vertical : EdgePosition.Horizontal;
+                ? EdgePosition.VERTICAL : EdgePosition.HORIZONTAL;
     }
 
     private static boolean isVerticalOrientation(Edge edge) {

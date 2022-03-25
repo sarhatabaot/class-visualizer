@@ -192,7 +192,7 @@ public final class GraphComponent extends JPanel implements Scrollable {
                 edge.relationType == RelationType.DEPENDENCY_THROWS || edge.relationType == RelationType.DEPENDENCY_ANNOTATION
                         ? relationColors.get( edge.relationType ) : classForeground );
         // line
-        g2.setStroke( edge.lineStyle == EdgeLineStyle.Solid ? solidLine : dashedLine );
+        g2.setStroke( edge.lineStyle == EdgeLineStyle.SOLID ? solidLine : dashedLine );
         int connectorCount = edge.connector.size();
         g2.draw( edge.connector.get( connectorCount - 1 ) );
         // terminators

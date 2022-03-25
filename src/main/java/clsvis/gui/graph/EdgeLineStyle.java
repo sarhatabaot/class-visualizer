@@ -6,5 +6,6 @@ package clsvis.gui.graph;
  * @author Jonatan Kazmierczak [Jonatan (at) Son-of-God.info]
  */
 public enum EdgeLineStyle {
-    Solid, Dashed,
+    SOLID,
+    DASHED
 }
