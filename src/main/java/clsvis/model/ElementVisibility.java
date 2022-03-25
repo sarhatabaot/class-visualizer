@@ -6,15 +6,15 @@ package clsvis.model;
  * @author Jonatan Kazmierczak [Jonatan (at) Son-of-God.info]
  */
 public enum ElementVisibility {
-    Public( '+' ),
-    Protected( '#' ),
-    Package( '~' ),
-    Private( '-' ),
-    Local( '\0' ),;
+    PUBLIC( '+' ),
+    PROTECTED( '#' ),
+    PACKAGE( '~' ),
+    PRIVATE( '-' ),
+    LOCAL( '\0' ),;
 
     public final String symbolStr;
 
-    private ElementVisibility(char symbol) {
+    ElementVisibility(char symbol) {
         if (symbol == '\0') {
             symbolStr = ""; // special symbol - ignore it
         } else {

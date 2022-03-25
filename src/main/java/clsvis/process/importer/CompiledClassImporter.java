@@ -273,7 +273,7 @@ public class CompiledClassImporter {
             class_.addRelation( RelationType.SuperClass, superClass_ );
             class_.addMember(
                     new ParameterizableElement( "extends", "extends", superClass, superGenericType,
-                            Collections.emptyList(), ElementKind.EXTENDS, ElementVisibility.Local ) );
+                            Collections.emptyList(), ElementKind.EXTENDS, ElementVisibility.LOCAL) );
         }
         // Process eventual type params
         for (TypeVariable paramType : clazz.getTypeParameters()) {
@@ -290,7 +290,7 @@ public class CompiledClassImporter {
             class_.addMember(
                     new ParameterizableElement(
                             "implements" + (i + 1), "implements" + (i + 1), superInterfaces[ i ], superGenericInterfaces[ i ],
-                            Collections.emptyList(), ElementKind.IMPLEMENTS, ElementVisibility.Local ) );
+                            Collections.emptyList(), ElementKind.IMPLEMENTS, ElementVisibility.LOCAL) );
         }
 
         for (Class usedSuperInterface : superInterfaces) {
@@ -516,7 +516,7 @@ public class CompiledClassImporter {
                             methodParam.getName(),
                             methodParam.getName(), methodParam.getType(), methodParam.getParameterizedType(),
                             decodeModifiers( methodParam.getModifiers(), methodParam ),
-                            ElementKind.PARAMETERS, ElementVisibility.Local );
+                            ElementKind.PARAMETERS, ElementVisibility.LOCAL);
             // Protection from AIOOBE caused by wrong signatures
             importAnnotations( methodParam.getAnnotations(), parameter.annotations );
             parameters.add( parameter );
@@ -532,7 +532,7 @@ public class CompiledClassImporter {
                     new ParameterizableElement(
                             String.format( "[%d] %s", (i + 1), exceptionTypes[ i ].getCanonicalName() ),
                             "e" + (i + 1), exceptionTypes[ i ], exceptionTypes[ i ], Collections.emptyList(),
-                            ElementKind.THROWS, ElementVisibility.Local ) );
+                            ElementKind.THROWS, ElementVisibility.LOCAL) );
         }
         // Create operation
         Operation operation = new Operation( id, methodName, methodType, methodGenericType, modifiers,
@@ -627,15 +627,15 @@ public class CompiledClassImporter {
 
     private static ElementVisibility getVisibility(Collection<ElementModifier> modifiers) {
         if (modifiers.contains( ElementModifier.PUBLIC)) {
-            return ElementVisibility.Public;
+            return ElementVisibility.PUBLIC;
         }
         if (modifiers.contains( ElementModifier.PROTECTED)) {
-            return ElementVisibility.Protected;
+            return ElementVisibility.PROTECTED;
         }
         if (modifiers.contains( ElementModifier.PRIVATE)) {
-            return ElementVisibility.Private;
+            return ElementVisibility.PRIVATE;
         }
-        return ElementVisibility.Package;
+        return ElementVisibility.PACKAGE;
     }
 
     /**
