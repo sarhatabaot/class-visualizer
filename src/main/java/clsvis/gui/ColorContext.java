@@ -8,18 +8,18 @@ import clsvis.Utils;
  * @author Jonatan Kazmierczak [Jonatan (at) Son-of-God.info]
  */
 public enum ColorContext {
-    UmlClassName( 0xFF0000 ),
-    UmlSectionTitle( 0x008000 ),
-    UmlType( 0x000080 ),
-    UmlParams( 0x008080 ),
-    UmlStereotype( 0x808000 ),
-    ClassProcessed( 0x000000 ),
-    ClassUnprocessed( 0x585858 );
+    UML_CLASS_NAME( 0xFF0000 ),
+    UML_SECTION_TITLE( 0x008000 ),
+    UML_TYPE( 0x000080 ),
+    UML_PARAMS( 0x008080 ),
+    UML_STEREOTYPE( 0x808000 ),
+    CLASS_PROCESSED( 0x000000 ),
+    CLASS_UNPROCESSED( 0x585858 );
 
     public final int colorInt;
     public final String colorStr;
 
-    private ColorContext(int color) {
+    ColorContext(int color) {
         this.colorInt = color;
         this.colorStr = Utils.colorAsRRGGBB( color );
     }

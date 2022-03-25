@@ -27,7 +27,7 @@ public class ClassPresentationWrapper implements TreeNode {
     @Override
     public String toString() {
         return String.format( "<html><span color=#%s>%s%s<b>%s</b>%s%s</span> (%s) %s",
-                class_.relationsProcessed ? ColorContext.ClassProcessed.colorStr : ColorContext.ClassUnprocessed.colorStr,
+                class_.relationsProcessed ? ColorContext.CLASS_PROCESSED.colorStr : ColorContext.CLASS_UNPROCESSED.colorStr,
                 class_.isStatic() ? "<u>" : "",
                 class_.isAbstract() ? "<i>" : "",
                 class_.name,

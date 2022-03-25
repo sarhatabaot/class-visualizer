@@ -208,7 +208,7 @@ public class Class_ extends ParameterizableElement {
                 + "<td><span %s>&nbsp;%s%s%s <b>%s</b>%s%s</span> (%s) %s"
                 + "</table>",
                 kind.symbolStr,
-                relationsProcessed ? "" : "color=#" + ColorContext.ClassUnprocessed.colorStr,
+                relationsProcessed ? "" : "color=#" + ColorContext.CLASS_UNPROCESSED.colorStr,
                 isStatic() ? "<u>" : "",
                 isAbstract() ? "<i>" : "",
                 visibility.symbolStr,

@@ -75,7 +75,7 @@ public abstract class LangElement implements Comparable<LangElement> {
                     || modifier == ElementModifier.STATIC && withoutAbstractAndStatic) {
                 continue;
             }
-            sb.append( "<span color=" ).append( ColorContext.UmlStereotype.colorStr ).append( ">\u00ab" )
+            sb.append( "<span color=" ).append( ColorContext.UML_STEREOTYPE.colorStr ).append( ">\u00ab" )
                     .append( modifier ).append( "\u00bb</span>" );
             sb.append( separator );
         }
@@ -105,7 +105,7 @@ public abstract class LangElement implements Comparable<LangElement> {
                 isAbstract() ? "<i>" : "",
                 visibility.symbolStr,
                 name,
-                ColorContext.UmlType.colorStr,
+                ColorContext.UML_TYPE.colorStr,
                 fullTypeName.replace( "<", "&lt;" ),
                 getDeclarationSuffix(),
                 isAbstract() ? "</i>" : "",

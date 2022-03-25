@@ -37,6 +37,7 @@ public final class GUIHandler extends StreamHandler {
                     try {
                         textArea.replaceRange( "...\n", 0, textArea.getLineEndOffset( lineCount - MAX_LINES - 1 ) );
                     } catch (BadLocationException ignored) {
+                        //ignored
                     }
                 }
                 // Show new log entry

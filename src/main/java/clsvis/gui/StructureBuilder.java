@@ -31,7 +31,7 @@ public abstract class StructureBuilder {
         ClassPresentationWrapper classNode = new ClassPresentationWrapper( class_, null );
         Collection<Class_> subClasses = class_.getRelations( RelationType.SUPER_CLASS, RelationDirection.INBOUND);
         if (subClasses.isEmpty()) {
-            classNode.children = Collections.EMPTY_LIST;
+            classNode.children = Collections.emptyList();
         } else {
             int subtreeCount = 0;
             ArrayList<ClassPresentationWrapper> subClassNodes = new ArrayList<>( subClasses.size() );
@@ -156,13 +156,13 @@ public abstract class StructureBuilder {
                 + "<table align=center cellspacing=0 border=1>"
                 + "<tr><td nowrap>" + parentsSB
                 + "<div align=center>"
-                + buildAnnotationsUMLTable( class_.annotations, "<br>", ColorContext.UmlStereotype.colorStr )
+                + buildAnnotationsUMLTable( class_.annotations, "<br>", ColorContext.UML_STEREOTYPE.colorStr )
                 + class_.getStereotypesAsString( "<br>", true )
                 + (namespace != null ? namespace + "<br>" : "")
                 + String.format( "%s%s<b><span color=%s>%s</span></b>%s%s",
                         class_.isStatic() ? "<u>" : "",
                         class_.isAbstract() ? "<i>" : "",
-                        ColorContext.UmlClassName.colorStr,
+                        ColorContext.UML_CLASS_NAME.colorStr,
                         class_.getShortNameWithParams().replaceAll( "<", "&lt;" ),
                         class_.isAbstract() ? "</i>" : "",
                         class_.isStatic() ? "</u>" : ""
@@ -186,9 +186,9 @@ public abstract class StructureBuilder {
 
         StringBuilder sb = new StringBuilder( 0x2000 );
         sb.append( String.format(
-                "<tr><td nowrap><div align=center color=%s>%s</div>", ColorContext.UmlSectionTitle.colorStr, elementKind ) );
+                "<tr><td nowrap><div align=center color=%s>%s</div>", ColorContext.UML_SECTION_TITLE.colorStr, elementKind ) );
         for (ParameterizableElement element : elements) {
-            String annotationsStr = buildAnnotationsUMLTable( element.annotations, " ", ColorContext.UmlStereotype.colorStr );
+            String annotationsStr = buildAnnotationsUMLTable( element.annotations, " ", ColorContext.UML_STEREOTYPE.colorStr );
             String stereotypesStr = element.getStereotypesAsString( " ", true );
             if (stereotypesStr.length() > 0 || annotationsStr.length() > 0) {
                 sb.append( "&nbsp;&nbsp;&nbsp;" ).append( stereotypesStr ).append( annotationsStr ).append( "<br>" );
@@ -200,10 +200,10 @@ public abstract class StructureBuilder {
                     element.name.replace( "<", "&lt;" ),
                     (element instanceof Operation)
                             ? String.format( "( <span color=%s>%s</span> )",
-                                    ColorContext.UmlParams.colorStr,
+                                    ColorContext.UML_PARAMS.colorStr,
                                     ((Operation) element).getParametersAsString().replace( "<", "&lt;" ) )
                             : "",
-                    ColorContext.UmlType.colorStr,
+                    ColorContext.UML_TYPE.colorStr,
                     element.shortTypeName.replace( "<", "&lt;" ),
                     element.getDeclarationSuffix(),
                     element.isAbstract() ? "</i>" : "",

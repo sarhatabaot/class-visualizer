@@ -66,8 +66,8 @@ public final class GraphComponent extends JPanel implements Scrollable {
     private final Font classFont = new Font( Font.SANS_SERIF, Font.BOLD, size );
     private final Font abstractClassFont = new Font( Font.SANS_SERIF, Font.BOLD | Font.ITALIC, size );
     private final Color selectedClassForeground = Color.red; // foreground for selected vertex
-    private final Color classForeground = new Color( ColorContext.ClassProcessed.colorInt );
-    private final Color classUnprocessedForeground = new Color( ColorContext.ClassUnprocessed.colorInt );
+    private final Color classForeground = new Color( ColorContext.CLASS_PROCESSED.colorInt );
+    private final Color classUnprocessedForeground = new Color( ColorContext.CLASS_UNPROCESSED.colorInt );
 
     private Class_ mainClass;
     private Vertex selectedVertex;

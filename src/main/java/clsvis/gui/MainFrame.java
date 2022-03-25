@@ -569,7 +569,7 @@ public class MainFrame extends JFrame {
                 "Choose directories/JARs to add to class path" );
         if (choice == JFileChooser.APPROVE_OPTION) {
             executeWorker( new ClassProcessorTask( this,
-                    new ProjectConfig( projectConfig.path, openFileChooser.getSelectedFiles(), new File[0] ) ) );
+                    new ProjectConfig( projectConfig.path, openFileChooser.getSelectedFiles()) ) );
         }
     }//GEN-LAST:event_addJarsToClasspathMenuItemActionPerformed
 
