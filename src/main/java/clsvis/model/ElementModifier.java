@@ -14,45 +14,51 @@ import java.util.Set;
  * @see java.lang.reflect.Modifier
  */
 public enum ElementModifier {
-    PUBLIC,
-    PROTECTED,
-    PRIVATE,
-    ABSTRACT,
-    STATIC,
-    FINAL,
-    TRANSIENT,
-    VOLATILE,
-    SYNCHRONIZED,
-    NATIVE,
-    STRICT, // TODO: should be represented as strictfp
-    READ_ONLY,
+    PUBLIC("Public"),
+    PROTECTED("Protected"),
+    PRIVATE("Private"),
+    ABSTRACT("Abstract"),
+    STATIC("Static"),
+    FINAL("Final"),
+    TRANSIENT("Transient"),
+    VOLATILE("Volatile"),
+    SYNCHRONIZED("Synchronized"),
+    NATIVE("Native"),
+    STRICT("Strict"), // TODO: should be represented as strictfp
+    READ_ONLY("ReadOnly"),
     //WriteOnly,
-    INTERFACE,
-    ENUM, // TODO: should be presented as "enumeration"
-    ANNOTATION,
-    RECORD,
-    SEALED,
-    THROWABLE,
-    LOCAL_CLASS,
-    MEMBER_CLASS,
-    SYNTHETIC,
-    BRIDGE,
-    DEFAULT,
-    IMPLICIT,
-    VAR_ARGS,
+    INTERFACE("Interface"),
+    ENUM("Enum"), // TODO: should be presented as "enumeration"
+    ANNOTATION("Annotation"),
+    RECORD("Record"),
+    SEALED("Sealed"),
+    THROWABLE("Throwable"),
+    LOCAL_CLASS("LocalClass"),
+    MEMBER_CLASS("MemberClass"),
+    SYNTHETIC("Synthetic"),
+    BRIDGE("Bridge"),
+    DEFAULT("Default"),
+    IMPLICIT("Implicit"),
+    VAR_ARGS("VarArgs"),
     ;
 
+    private final String methodName;
     public static final Set<ElementModifier> visibilityModifiers = Collections.unmodifiableSet( EnumSet.of(
             ElementModifier.PRIVATE, ElementModifier.PROTECTED, ElementModifier.PUBLIC) );
 
     private final String asString;
 
-    ElementModifier() {
-        asString = Introspector.decapitalize( name() );
+    ElementModifier(final String methodName) {
+        this.methodName = methodName;
+        asString = Introspector.decapitalize( methodName );
     }
 
     @Override
     public String toString() {
         return asString;
+    }
+
+    public String getMethodName() {
+        return methodName;
     }
 }

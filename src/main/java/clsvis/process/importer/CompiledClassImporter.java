@@ -113,7 +113,7 @@ public class CompiledClassImporter {
     public CompiledClassImporter() {
         // Initialize generalModifierProcessors
         for (ElementModifier em : generalModifiers) {
-            generalModifierProcessors.put( em, createMemberMethod( em.name(), Modifier.class, Integer.TYPE ) );
+            generalModifierProcessors.put( em, createMemberMethod( em.getMethodName(), Modifier.class, Integer.TYPE ) );
         }
         // Initialize elementModifierProcessors
         initModifierProcessors( classModifiers, Class.class );
@@ -127,7 +127,7 @@ public class CompiledClassImporter {
         Map<ElementModifier, Method> modifierProcessors = new EnumMap<>( ElementModifier.class );
         elementModifierProcessors.put( clazz.getName(), modifierProcessors );
         for (ElementModifier em : elementModifiers) {
-            modifierProcessors.put( em, createMemberMethod( em.name(), clazz ) );
+            modifierProcessors.put( em, createMemberMethod( em.getMethodName(), clazz ) );
         }
     }
 
