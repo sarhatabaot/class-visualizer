@@ -29,7 +29,7 @@ public abstract class StructureBuilder {
     
     public static ClassPresentationWrapper buildClassesTreeNode2(Class_ class_, ClassPresentationWrapper parent) {
         ClassPresentationWrapper classNode = new ClassPresentationWrapper( class_, null );
-        Collection<Class_> subClasses = class_.getRelations( RelationType.SuperClass, RelationDirection.Inbound );
+        Collection<Class_> subClasses = class_.getRelations( RelationType.SUPER_CLASS, RelationDirection.INBOUND);
         if (subClasses.isEmpty()) {
             classNode.children = Collections.EMPTY_LIST;
         } else {
@@ -52,20 +52,20 @@ public abstract class StructureBuilder {
     private static final String MEMBERS_TREE_NODE_SUBTITLE_PREFIX = "<html>";
 
     private static final Object[][] relationsToProcess = {
-        { RelationType.SuperClass, RelationDirection.Outbound, "Generalization (SuperClass)" },
-        { RelationType.SuperInterface, RelationDirection.Outbound, "Abstractions (SuperInterfaces)" },
-        { RelationType.SuperInterface, RelationDirection.Inbound, "Specializations (SubInterfaces)" },
-        { RelationType.SuperClass, RelationDirection.Inbound, "Specializations/Realizations (SubClasses)" },
-        { RelationType.InnerClass, RelationDirection.Outbound, "Nestings (Inner Classes)" },
-        { RelationType.Association, RelationDirection.Outbound, "Associations (Uses)" },
-        { RelationType.Dependency, RelationDirection.Outbound, "Dependencies (Uses)" },
-        { RelationType.DependencyAnnotation, RelationDirection.Outbound, "Dependencies (Annotations)" },
-        { RelationType.DependencyThrows, RelationDirection.Outbound, "Dependencies (Throws)" },
-        { RelationType.InnerClass, RelationDirection.Inbound, "Nesting Owner (Outer Class)" },
-        { RelationType.Association, RelationDirection.Inbound, "Association Usages (Used By)" },
-        { RelationType.Dependency, RelationDirection.Inbound, "Dependency Usages (Used By)" },
-        { RelationType.DependencyAnnotation, RelationDirection.Inbound, "Dependency Usages (Annotated)" },
-        { RelationType.DependencyThrows, RelationDirection.Inbound, "Dependency Usages (Thrown By)" }, };
+        { RelationType.SUPER_CLASS, RelationDirection.OUTBOUND, "Generalization (SuperClass)" },
+        { RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND, "Abstractions (SuperInterfaces)" },
+        { RelationType.SUPER_INTERFACE, RelationDirection.INBOUND, "Specializations (SubInterfaces)" },
+        { RelationType.SUPER_CLASS, RelationDirection.INBOUND, "Specializations/Realizations (SubClasses)" },
+        { RelationType.INNER_CLASS, RelationDirection.OUTBOUND, "Nestings (Inner Classes)" },
+        { RelationType.ASSOCIATION, RelationDirection.OUTBOUND, "Associations (Uses)" },
+        { RelationType.DEPENDENCY, RelationDirection.OUTBOUND, "Dependencies (Uses)" },
+        { RelationType.DEPENDENCY_ANNOTATION, RelationDirection.OUTBOUND, "Dependencies (Annotations)" },
+        { RelationType.DEPENDENCY_THROWS, RelationDirection.OUTBOUND, "Dependencies (Throws)" },
+        { RelationType.INNER_CLASS, RelationDirection.INBOUND, "Nesting Owner (Outer Class)" },
+        { RelationType.ASSOCIATION, RelationDirection.INBOUND, "Association Usages (Used By)" },
+        { RelationType.DEPENDENCY, RelationDirection.INBOUND, "Dependency Usages (Used By)" },
+        { RelationType.DEPENDENCY_ANNOTATION, RelationDirection.INBOUND, "Dependency Usages (Annotated)" },
+        { RelationType.DEPENDENCY_THROWS, RelationDirection.INBOUND, "Dependency Usages (Thrown By)" }, };
 
     public static DefaultMutableTreeNode buildMembersTreeNode(Class_ class_) {
         DefaultMutableTreeNode classNode = new DefaultMutableTreeNode( class_ );
@@ -130,9 +130,9 @@ public abstract class StructureBuilder {
     public static String buildClassUMLTable(Class_ class_) {
         String namespace = class_.getNamespaceUml();
         // Existing parents
-        Collection<Class_> parents = class_.relationsMap.get( RelationDirection.Outbound ).get( RelationType.SuperClass );
+        Collection<Class_> parents = class_.relationsMap.get( RelationDirection.OUTBOUND).get( RelationType.SUPER_CLASS);
         if (parents.isEmpty()) {
-            parents = class_.relationsMap.get( RelationDirection.Outbound ).get( RelationType.SuperInterface );
+            parents = class_.relationsMap.get( RelationDirection.OUTBOUND).get( RelationType.SUPER_INTERFACE);
         }
         StringBuilder parentsSB = new StringBuilder( 0x80 );
         for (Class_ parent : parents) {
@@ -232,16 +232,16 @@ public abstract class StructureBuilder {
         for (ElementKind elementKind : memberKinds) {
             members += class_.getMembers( elementKind ).size();
         }
-        int parents = class_.getRelations( RelationType.SuperClass, RelationDirection.Outbound ).size()
-                + class_.getRelations( RelationType.SuperInterface, RelationDirection.Outbound ).size();
-        int usedBy = class_.relationsToCheck.get( RelationDirection.Inbound ).size()
-                + class_.getRelations( RelationType.DependencyThrows, RelationDirection.Inbound ).size()
-                + class_.getRelations( RelationType.DependencyAnnotation, RelationDirection.Inbound ).size();
-        int uses = class_.relationsToCheck.get( RelationDirection.Outbound ).size()
-                + class_.getRelations( RelationType.DependencyThrows, RelationDirection.Outbound ).size()
-                + class_.getRelations( RelationType.DependencyAnnotation, RelationDirection.Outbound ).size();
-        int children = class_.getRelations( RelationType.SuperClass, RelationDirection.Inbound ).size()
-                + class_.getRelations( RelationType.SuperInterface, RelationDirection.Inbound ).size();
+        int parents = class_.getRelations( RelationType.SUPER_CLASS, RelationDirection.OUTBOUND).size()
+                + class_.getRelations( RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND).size();
+        int usedBy = class_.relationsToCheck.get( RelationDirection.INBOUND).size()
+                + class_.getRelations( RelationType.DEPENDENCY_THROWS, RelationDirection.INBOUND).size()
+                + class_.getRelations( RelationType.DEPENDENCY_ANNOTATION, RelationDirection.INBOUND).size();
+        int uses = class_.relationsToCheck.get( RelationDirection.OUTBOUND).size()
+                + class_.getRelations( RelationType.DEPENDENCY_THROWS, RelationDirection.OUTBOUND).size()
+                + class_.getRelations( RelationType.DEPENDENCY_ANNOTATION, RelationDirection.OUTBOUND).size();
+        int children = class_.getRelations( RelationType.SUPER_CLASS, RelationDirection.INBOUND).size()
+                + class_.getRelations( RelationType.SUPER_INTERFACE, RelationDirection.INBOUND).size();
         return String.format(
                 "<html>"
                 + "<head><style>"

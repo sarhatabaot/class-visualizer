@@ -37,7 +37,7 @@ public abstract class LangElement implements Comparable<LangElement> {
         //this.genericType = genericType;
         this.kind = kind;
         this.visibility = visibility;
-        this.modifiers = modifiers.isEmpty() ? Collections.EMPTY_SET : EnumSet.copyOf( modifiers );
+        this.modifiers = modifiers.isEmpty() ? Collections.emptySet() : EnumSet.copyOf( modifiers );
         Class originalType = Utils.getClassType( type );
         this.originalTypeName = originalType != null ? type.getName() : null;
         //this.typeIsLoadable = Utils.getClassType(type) != null;

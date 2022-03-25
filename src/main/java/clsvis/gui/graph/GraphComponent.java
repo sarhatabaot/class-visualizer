@@ -189,7 +189,7 @@ public final class GraphComponent extends JPanel implements Scrollable {
 
     private void drawEdge2(Graphics2D g2, Edge edge) {
         g2.setColor(
-                edge.relationType == RelationType.DependencyThrows || edge.relationType == RelationType.DependencyAnnotation
+                edge.relationType == RelationType.DEPENDENCY_THROWS || edge.relationType == RelationType.DEPENDENCY_ANNOTATION
                         ? relationColors.get( edge.relationType ) : classForeground );
         // line
         g2.setStroke( edge.lineStyle == EdgeLineStyle.Solid ? solidLine : dashedLine );

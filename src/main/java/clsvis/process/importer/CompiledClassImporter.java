@@ -87,8 +87,8 @@ public class CompiledClassImporter {
     static {
         ElementKind[] memberKinds = { ElementKind.CONSTANTS, ElementKind.FIELDS, ElementKind.PROPERTIES,
             ElementKind.CONSTRUCTORS, ElementKind.METHODS};
-        RelationType[] relationTypes = { RelationType.Association, RelationType.Association, RelationType.Association,
-            RelationType.Dependency, RelationType.Dependency };
+        RelationType[] relationTypes = { RelationType.ASSOCIATION, RelationType.ASSOCIATION, RelationType.ASSOCIATION,
+            RelationType.DEPENDENCY, RelationType.DEPENDENCY};
         for (int i = 0; i < memberKinds.length; i++) {
             memberKindRelations.put( memberKinds[ i ], relationTypes[ i ] );
         }
@@ -196,10 +196,10 @@ public class CompiledClassImporter {
         }
 
         // Eventual parameterized types of class itself
-        addRelations( class_, List.of(class_), RelationType.Dependency );
+        addRelations( class_, List.of(class_), RelationType.DEPENDENCY);
 
         // Discover relations of inner classes
-        for (Class_ innerClass : class_.getRelations( RelationType.InnerClass, RelationDirection.Outbound )) {
+        for (Class_ innerClass : class_.getRelations( RelationType.INNER_CLASS, RelationDirection.OUTBOUND)) {
             importClass( innerClass.originalTypeName );
         }
 
@@ -270,7 +270,7 @@ public class CompiledClassImporter {
         Type superGenericType = clazz.getGenericSuperclass();
         Class_ superClass_ = importClassInternal( superClass );
         if (superClass_ != null) {
-            class_.addRelation( RelationType.SuperClass, superClass_ );
+            class_.addRelation( RelationType.SUPER_CLASS, superClass_ );
             class_.addMember(
                     new ParameterizableElement( "extends", "extends", superClass, superGenericType,
                             Collections.emptyList(), ElementKind.EXTENDS, ElementVisibility.LOCAL) );
@@ -307,7 +307,7 @@ public class CompiledClassImporter {
                 Class_ innerClass_ = importClassInternal( innerClass );
                 // Prevent from nulls caused by anonymous classes
                 if (innerClass_ != null) {
-                    class_.addRelation( RelationType.InnerClass, innerClass_ );
+                    class_.addRelation( RelationType.INNER_CLASS, innerClass_ );
                 }
             } catch (Throwable t) {
                 // Error during importing inner class doesn't affect parent
@@ -677,12 +677,12 @@ public class CompiledClassImporter {
                 addRelation( class_, typeName, relType );
             }
             for (Annotation_ annotation_ : element.annotations) {
-                addRelation( class_, annotation_.originalTypeName, RelationType.DependencyAnnotation );
+                addRelation( class_, annotation_.originalTypeName, RelationType.DEPENDENCY_ANNOTATION);
             }
             if (element instanceof Operation) {
                 Operation operation = (Operation) element;
-                addRelations( class_, operation.parameters, RelationType.Dependency );
-                addRelations( class_, operation.throwables, RelationType.DependencyThrows );
+                addRelations( class_, operation.parameters, RelationType.DEPENDENCY);
+                addRelations( class_, operation.throwables, RelationType.DEPENDENCY_THROWS);
             }
             // Cleanup
             element.typeParameters.clear();

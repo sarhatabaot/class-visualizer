@@ -868,10 +868,10 @@ public class MainFrame extends JFrame {
         ArrayList<Class_> classPath = new ArrayList<>();
         do {
             classPath.add( class_ );
-            if (class_.relationsMap.get( RelationDirection.Outbound ).get( RelationType.SuperClass ).isEmpty()) {
+            if (class_.relationsMap.get( RelationDirection.OUTBOUND).get( RelationType.SUPER_CLASS).isEmpty()) {
                 break;
             }
-            class_ = class_.relationsMap.get( RelationDirection.Outbound ).get( RelationType.SuperClass ).iterator().next();
+            class_ = class_.relationsMap.get( RelationDirection.OUTBOUND).get( RelationType.SUPER_CLASS).iterator().next();
         } while (true);
         Collections.reverse( classPath );
         // build equivalent path from TreeNodes

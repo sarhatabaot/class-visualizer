@@ -25,9 +25,9 @@ import java.util.TreeSet;
 public class Class_ extends ParameterizableElement {
 
     private static final Set<RelationType> CHECKABLE_RELATIONS
-            = EnumSet.of( RelationType.InnerClass, RelationType.Association, RelationType.Dependency );
+            = EnumSet.of( RelationType.INNER_CLASS, RelationType.ASSOCIATION, RelationType.DEPENDENCY);
     private static final Set<RelationType> IMMUTABLE_RELATIONS
-            = EnumSet.of( RelationType.SuperClass, RelationType.SuperInterface, RelationType.InnerClass );
+            = EnumSet.of( RelationType.SUPER_CLASS, RelationType.SUPER_INTERFACE, RelationType.INNER_CLASS);
     private static final Set<ElementKind> MEMBER_KINDS_EXTENDED = EnumSet.of(
             ElementKind.CONSTANTS, ElementKind.FIELDS, ElementKind.PROPERTIES,
             ElementKind.CONSTRUCTORS, ElementKind.METHODS,
@@ -90,16 +90,16 @@ public class Class_ extends ParameterizableElement {
 
     public void addRelation(RelationType relType, Class_ class_) {
         if (class_ != this) {
-            addRelation( relType, class_, RelationDirection.Outbound );
-            class_.addRelation( relType, this, RelationDirection.Inbound );
+            addRelation( relType, class_, RelationDirection.OUTBOUND);
+            class_.addRelation( relType, this, RelationDirection.INBOUND);
         }
     }
 
     public void addSuperInterface(Class_ class_) {
-        addRelation( RelationType.SuperInterface, class_, RelationDirection.Outbound );
+        addRelation( RelationType.SUPER_INTERFACE, class_, RelationDirection.OUTBOUND);
         class_.addRelation(
-                modifiers.contains( ElementModifier.INTERFACE) ? RelationType.SuperInterface : RelationType.SuperClass,
-                this, RelationDirection.Inbound );
+                modifiers.contains( ElementModifier.INTERFACE) ? RelationType.SUPER_INTERFACE : RelationType.SUPER_CLASS,
+                this, RelationDirection.INBOUND);
     }
 
     private void addRelation(RelationType relType, Class_ class_, RelationDirection relDirection) {
@@ -130,8 +130,8 @@ public class Class_ extends ParameterizableElement {
         }
         // super class, super ifaces, inner classes
         for (RelationType relType : IMMUTABLE_RELATIONS) {
-            Collection<Class_> classesSet = relationsMap.get( RelationDirection.Outbound ).get( relType );
-            relationsMap.get( RelationDirection.Outbound ).put( relType,
+            Collection<Class_> classesSet = relationsMap.get( RelationDirection.OUTBOUND).get( relType );
+            relationsMap.get( RelationDirection.OUTBOUND).put( relType,
                     classesSet.isEmpty() ? Collections.emptyList() : new ArrayList<>( classesSet ) );
         }
     }
@@ -143,13 +143,13 @@ public class Class_ extends ParameterizableElement {
         // mark full setup
         relationsProcessed = true;
         // outer class
-        Collection<Class_> outerClassesSet = relationsMap.get( RelationDirection.Inbound ).get( RelationType.InnerClass );
-        relationsMap.get( RelationDirection.Inbound ).put( RelationType.InnerClass,
+        Collection<Class_> outerClassesSet = relationsMap.get( RelationDirection.INBOUND).get( RelationType.INNER_CLASS);
+        relationsMap.get( RelationDirection.INBOUND).put( RelationType.INNER_CLASS,
                 outerClassesSet.isEmpty() ? Collections.emptyList() : new ArrayList<>( outerClassesSet ) );
         // outbound relations
         for (RelationType relType : RelationType.values()) {
-            if (relationsMap.get( RelationDirection.Outbound ).get( relType ).isEmpty()) {
-                relationsMap.get( RelationDirection.Outbound ).put( relType, Collections.emptyList() );
+            if (relationsMap.get( RelationDirection.OUTBOUND).get( relType ).isEmpty()) {
+                relationsMap.get( RelationDirection.OUTBOUND).put( relType, Collections.emptyList() );
             }
         }
         // TODO: process inbounds according to final

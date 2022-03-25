@@ -30,16 +30,16 @@ class SideGraphLayoutBuilder {
 
     // decision tables
     private static final RelationType[] relationTypes = {
-        RelationType.SuperInterface, RelationType.SuperClass,
-        RelationType.InnerClass, RelationType.InnerClass,
-        RelationType.Association, RelationType.Dependency, RelationType.DependencyAnnotation, RelationType.DependencyThrows,
-        RelationType.Association, RelationType.Dependency, RelationType.DependencyAnnotation, RelationType.DependencyThrows,
+        RelationType.SUPER_INTERFACE, RelationType.SUPER_CLASS,
+        RelationType.INNER_CLASS, RelationType.INNER_CLASS,
+        RelationType.ASSOCIATION, RelationType.DEPENDENCY, RelationType.DEPENDENCY_ANNOTATION, RelationType.DEPENDENCY_THROWS,
+        RelationType.ASSOCIATION, RelationType.DEPENDENCY, RelationType.DEPENDENCY_ANNOTATION, RelationType.DEPENDENCY_THROWS,
     };
     private static final RelationDirection[] relationDirections = {
-        RelationDirection.Inbound, RelationDirection.Inbound,
-        RelationDirection.Outbound, RelationDirection.Inbound,
-        RelationDirection.Outbound, RelationDirection.Outbound, RelationDirection.Outbound, RelationDirection.Outbound,
-        RelationDirection.Inbound, RelationDirection.Inbound, RelationDirection.Inbound, RelationDirection.Inbound,
+        RelationDirection.INBOUND, RelationDirection.INBOUND,
+        RelationDirection.OUTBOUND, RelationDirection.INBOUND,
+        RelationDirection.OUTBOUND, RelationDirection.OUTBOUND, RelationDirection.OUTBOUND, RelationDirection.OUTBOUND,
+        RelationDirection.INBOUND, RelationDirection.INBOUND, RelationDirection.INBOUND, RelationDirection.INBOUND,
     };
 
     /** Equal to size of the biggest screen. Initialized in constructor. */
@@ -92,7 +92,7 @@ class SideGraphLayoutBuilder {
         // Create 2 collections containing half of SuperInterfaces each
         Collection<Class_> generalizations1 = new ArrayList<Class_>( 8 );
         Collection<Class_> generalizations2 = new ArrayList<Class_>( 8 );
-        Collection<Class_> superInterfaces = class_.getRelations( RelationType.SuperInterface, RelationDirection.Outbound );
+        Collection<Class_> superInterfaces = class_.getRelations( RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND);
         int generCount = superInterfaces.size();
         int generIdx = 0;
         for (Class_ superInterface : superInterfaces) {
@@ -110,15 +110,15 @@ class SideGraphLayoutBuilder {
         // Top row
         createVerticesAndEdges(
                 generalizations1, usedClasses,
-                RelationType.SuperInterface, RelationDirection.Outbound, EdgePosition.Vertical,
+                RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND, EdgePosition.Vertical,
                 mainClassVertex, rowTopVerts, edges, cellPadding, cellSpacing, classFM, abstractClassFM );
         createVerticesAndEdges(
-                class_.getRelations( RelationType.SuperClass, RelationDirection.Outbound ), usedClasses,
-                RelationType.SuperClass, RelationDirection.Outbound, EdgePosition.Vertical,
+                class_.getRelations( RelationType.SUPER_CLASS, RelationDirection.OUTBOUND), usedClasses,
+                RelationType.SUPER_CLASS, RelationDirection.OUTBOUND, EdgePosition.Vertical,
                 mainClassVertex, rowTopVerts, edges, cellPadding, cellSpacing, classFM, abstractClassFM );
         createVerticesAndEdges(
                 generalizations2, usedClasses,
-                RelationType.SuperInterface, RelationDirection.Outbound, EdgePosition.Vertical,
+                RelationType.SUPER_INTERFACE, RelationDirection.OUTBOUND, EdgePosition.Vertical,
                 mainClassVertex, rowTopVerts, edges, cellPadding, cellSpacing, classFM, abstractClassFM );
         // Remaining elements
         for (int i = 0; i < relationTypes.length; i++) {
@@ -252,11 +252,11 @@ class SideGraphLayoutBuilder {
                 x1 = edge.fromVertex.x + edge.fromVertex.width + cellSpacing;
                 // For main class, nesting is drawn above association/dependency
                 y1 = edge.fromVertex.main
-                        && !edge.fromVertex.class_.getRelations( RelationType.InnerClass, RelationDirection.Outbound ).isEmpty()
-                        && !(edge.fromVertex.class_.getRelations( RelationType.Association, RelationDirection.Outbound ).isEmpty()
-                        && edge.fromVertex.class_.getRelations( RelationType.Dependency, RelationDirection.Outbound ).isEmpty()
-                        && edge.fromVertex.class_.getRelations( RelationType.DependencyThrows, RelationDirection.Outbound ).isEmpty())
-                        ? edge.relationType == RelationType.InnerClass
+                        && !edge.fromVertex.class_.getRelations( RelationType.INNER_CLASS, RelationDirection.OUTBOUND).isEmpty()
+                        && !(edge.fromVertex.class_.getRelations( RelationType.ASSOCIATION, RelationDirection.OUTBOUND).isEmpty()
+                        && edge.fromVertex.class_.getRelations( RelationType.DEPENDENCY, RelationDirection.OUTBOUND).isEmpty()
+                        && edge.fromVertex.class_.getRelations( RelationType.DEPENDENCY_THROWS, RelationDirection.OUTBOUND).isEmpty())
+                        ? edge.relationType == RelationType.INNER_CLASS
                                 ? edge.fromVertex.y + cellSpacing / 2
                                 : edge.fromVertex.y + edge.fromVertex.height - cellSpacing / 2
                         : (int) edge.fromVertex.getCenterY();
@@ -268,8 +268,8 @@ class SideGraphLayoutBuilder {
                 path.moveTo( x3, y3 );
                 path.lineTo( x2, y2 );
                 // Right Arrow (if not bi-di association)
-                if (edge.relationType != RelationType.Association
-                        || !edge.toVertex.class_.getRelations( RelationType.Association, RelationDirection.Outbound )
+                if (edge.relationType != RelationType.ASSOCIATION
+                        || !edge.toVertex.class_.getRelations( RelationType.ASSOCIATION, RelationDirection.OUTBOUND)
                         .contains( edge.fromVertex.class_ )) {
                     // 2 pixels shift to avoid accidental connections
                     path.moveTo( x3, y3 );
@@ -280,7 +280,7 @@ class SideGraphLayoutBuilder {
                 // Starting line
                 int x4 = x1 - cellSpacing;
                 int y4 = y1;
-                if (edge.relationType == RelationType.InnerClass) {
+                if (edge.relationType == RelationType.INNER_CLASS) {
                     // Nesting
                     // Circle
                     int y5 = y4 - cellSpacing / 2;
@@ -303,9 +303,9 @@ class SideGraphLayoutBuilder {
                     = isVerticalOrientation( edge )
                     && !edge.fromVertex.class_.modifiers.contains( ElementModifier.INTERFACE)
                     && edge.toVertex.class_.modifiers.contains( ElementModifier.INTERFACE)
-                    || edge.relationType == RelationType.Dependency
-                    || edge.relationType == RelationType.DependencyThrows
-                    || edge.relationType == RelationType.DependencyAnnotation
+                    || edge.relationType == RelationType.DEPENDENCY
+                    || edge.relationType == RelationType.DEPENDENCY_THROWS
+                    || edge.relationType == RelationType.DEPENDENCY_ANNOTATION
                             ? EdgeLineStyle.Dashed : EdgeLineStyle.Solid;
         } // for edges
     }
@@ -344,7 +344,7 @@ class SideGraphLayoutBuilder {
         // Check, if all related classes can fit into 1 full screen
         // - if not, make 1 symbol-replacement for all of them
         boolean tooManyClasses
-                = relationType == RelationType.SuperClass || relationType == RelationType.SuperInterface
+                = relationType == RelationType.SUPER_CLASS || relationType == RelationType.SUPER_INTERFACE
                         ? (mainClassVertex.width + cellSpacing) * (targetClasses.size() + 2) > maxGraphSize.width
                         : (mainClassVertex.height + cellSpacing) * (targetClasses.size() + 2) > maxGraphSize.height;
         if (tooManyClasses) {
@@ -376,7 +376,7 @@ class SideGraphLayoutBuilder {
             String title
     ) {
         Vertex targetVertex = createVertex( targetClass, cellPadding, classFM, abstractClassFM, title );
-        Edge edge = (direction == RelationDirection.Outbound)
+        Edge edge = (direction == RelationDirection.OUTBOUND)
                 ? new Edge( mainClassVertex, targetVertex, relationType, position )
                 : new Edge( targetVertex, mainClassVertex, relationType, position );
         vertices.add( targetVertex );
@@ -391,11 +391,11 @@ class SideGraphLayoutBuilder {
     }
 
     private static EdgePosition getEdgePosition(RelationType relType) {
-        return relType == RelationType.SuperClass || relType == RelationType.SuperInterface
+        return relType == RelationType.SUPER_CLASS || relType == RelationType.SUPER_INTERFACE
                 ? EdgePosition.Vertical : EdgePosition.Horizontal;
     }
 
     private static boolean isVerticalOrientation(Edge edge) {
-        return edge.relationType == RelationType.SuperClass || edge.relationType == RelationType.SuperInterface;
+        return edge.relationType == RelationType.SUPER_CLASS || edge.relationType == RelationType.SUPER_INTERFACE;
     }
 }

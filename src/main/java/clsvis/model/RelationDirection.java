@@ -6,6 +6,6 @@ package clsvis.model;
  * @author Jonatan Kazmierczak [Jonatan (at) Son-of-God.info]
  */
 public enum RelationDirection {
-    Outbound,
-    Inbound,
+    OUTBOUND,
+    INBOUND,
 }
