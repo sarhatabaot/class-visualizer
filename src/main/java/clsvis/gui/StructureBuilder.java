@@ -71,7 +71,7 @@ public abstract class StructureBuilder {
         DefaultMutableTreeNode classNode = new DefaultMutableTreeNode( class_ );
         DefaultMutableTreeNode contentNode = new DefaultMutableTreeNode( "<html>&ni; Content" );
         buildElementTreeNode( class_.annotations,
-                MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.Annotations.titleWithSymbolStr, contentNode, false );
+                MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.ANNOTATIONS.titleWithSymbolStr, contentNode, false );
         for (Entry<ElementKind, List<ParameterizableElement>> entry : class_.membersMap.entrySet()) {
             buildElementTreeNode( entry.getValue(),
                     MEMBERS_TREE_NODE_SUBTITLE_PREFIX + entry.getKey().titleWithSymbolStr, contentNode, true );
@@ -110,14 +110,14 @@ public abstract class StructureBuilder {
             if (withAnnotations && element instanceof ParameterizableElement) {
                 ParameterizableElement parameterizableElement = (ParameterizableElement) element;
                 buildElementTreeNode( parameterizableElement.annotations,
-                        MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.Annotations.titleWithSymbolStr, elementNode, false );
+                        MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.ANNOTATIONS.titleWithSymbolStr, elementNode, false );
             }
             if (element instanceof Operation) {
                 Operation operation = (Operation) element;
                 buildElementTreeNode( operation.parameters,
-                        MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.Parameters.titleWithSymbolStr, elementNode, true );
+                        MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.PARAMETERS.titleWithSymbolStr, elementNode, true );
                 buildElementTreeNode( operation.throwables,
-                        MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.Throws.titleWithSymbolStr, elementNode, true );
+                        MEMBERS_TREE_NODE_SUBTITLE_PREFIX + ElementKind.THROWS.titleWithSymbolStr, elementNode, true );
             }
             elementsNode.add( elementNode );
         }
@@ -169,11 +169,11 @@ public abstract class StructureBuilder {
                 )
                 + "</div>"
                 + //"</td></tr>"
-                buildMembersUMLTable( class_, ElementKind.Constants )
-                + buildMembersUMLTable( class_, ElementKind.Fields )
-                + buildMembersUMLTable( class_, ElementKind.Properties )
-                + buildMembersUMLTable( class_, ElementKind.Constructors )
-                + buildMembersUMLTable( class_, ElementKind.Methods )
+                buildMembersUMLTable( class_, ElementKind.CONSTANTS)
+                + buildMembersUMLTable( class_, ElementKind.FIELDS)
+                + buildMembersUMLTable( class_, ElementKind.PROPERTIES)
+                + buildMembersUMLTable( class_, ElementKind.CONSTRUCTORS)
+                + buildMembersUMLTable( class_, ElementKind.METHODS)
                 + "</body>"
                 + "</html>";
     }
@@ -224,8 +224,8 @@ public abstract class StructureBuilder {
     }
 
     private static final Set<ElementKind> memberKinds = EnumSet.of(
-            ElementKind.Constants, ElementKind.Fields, ElementKind.Properties,
-            ElementKind.Constructors, ElementKind.Methods );
+            ElementKind.CONSTANTS, ElementKind.FIELDS, ElementKind.PROPERTIES,
+            ElementKind.CONSTRUCTORS, ElementKind.METHODS);
 
     public static String buildClassRelationsSummaryTable(Class_ class_) {
         int members = 0;

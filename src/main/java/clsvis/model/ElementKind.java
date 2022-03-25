@@ -9,21 +9,21 @@ import clsvis.Utils;
  * @author Jonatan Kazmierczak [Jonatan (at) Son-of-God.info]
  */
 public enum ElementKind {
-    Class( 0xFFF2CC ),
-    Interface( 0xCCFFCC ),
-    Enum( 0xCCCCFF ),
-    AnnotationType( 0xFECCFF ),
-    Throwable( 0xFF9F80 ),
-    Extends( 0x4F4F4F, '\u25b2' ),
-    Implements( 0xA9A9A9, '\u25b2' ),
-    Constants( 0xFF6F60, '\u25a0' ),
-    Fields( 0xA0C9E8, '\u25a0' ),
-    Properties( 0x4A72A1, '\u25a0' ),
-    Constructors( 0xFFA500, '\u2666' ),
-    Methods( 0xFF00FF, '\u2666' ),
-    Annotations( 0xFECCFF, '\u25cf' ),
-    Parameters( 0x008080, '\u25cf' ),
-    Throws( 0xA90000, '\u25cf' ),;
+    CLASS( 0xFFF2CC ),
+    INTERFACE( 0xCCFFCC ),
+    ENUM( 0xCCCCFF ),
+    ANNOTATION_TYPE( 0xFECCFF ),
+    THROWABLE( 0xFF9F80 ),
+    EXTENDS( 0x4F4F4F, '\u25b2' ),
+    IMPLEMENTS( 0xA9A9A9, '\u25b2' ),
+    CONSTANTS( 0xFF6F60, '\u25a0' ),
+    FIELDS( 0xA0C9E8, '\u25a0' ),
+    PROPERTIES( 0x4A72A1, '\u25a0' ),
+    CONSTRUCTORS( 0xFFA500, '\u2666' ),
+    METHODS( 0xFF00FF, '\u2666' ),
+    ANNOTATIONS( 0xFECCFF, '\u25cf' ),
+    PARAMETERS( 0x008080, '\u25cf' ),
+    THROWS( 0xA90000, '\u25cf' ),;
 
     /** RGB color of this kind. */
     public final int colorNum;

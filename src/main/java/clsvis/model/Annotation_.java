@@ -15,7 +15,7 @@ public class Annotation_ extends LangElement {
     private static final String REPLACEMENT = "<br>&nbsp;&nbsp;&nbsp;&nbsp;";
 
     public Annotation_(String id, String name, Class type) {
-        super( id, name, type, type, Collections.emptyList(), ElementKind.Annotations, ElementVisibility.Local );
+        super( id, name, type, type, Collections.emptyList(), ElementKind.ANNOTATIONS, ElementVisibility.Local );
     }
 
     public String getShortName() {

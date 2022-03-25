@@ -29,9 +29,9 @@ public class Class_ extends ParameterizableElement {
     private static final Set<RelationType> IMMUTABLE_RELATIONS
             = EnumSet.of( RelationType.SuperClass, RelationType.SuperInterface, RelationType.InnerClass );
     private static final Set<ElementKind> MEMBER_KINDS_EXTENDED = EnumSet.of(
-            ElementKind.Constants, ElementKind.Fields, ElementKind.Properties,
-            ElementKind.Constructors, ElementKind.Methods,
-            ElementKind.Extends, ElementKind.Implements );
+            ElementKind.CONSTANTS, ElementKind.FIELDS, ElementKind.PROPERTIES,
+            ElementKind.CONSTRUCTORS, ElementKind.METHODS,
+            ElementKind.EXTENDS, ElementKind.IMPLEMENTS);
 
     private final String typeParametersStr;
 

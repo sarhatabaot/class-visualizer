@@ -85,8 +85,8 @@ public class CompiledClassImporter {
     private static final EnumMap<ElementKind, RelationType> memberKindRelations = new EnumMap<>( ElementKind.class );
 
     static {
-        ElementKind[] memberKinds = { ElementKind.Constants, ElementKind.Fields, ElementKind.Properties,
-            ElementKind.Constructors, ElementKind.Methods };
+        ElementKind[] memberKinds = { ElementKind.CONSTANTS, ElementKind.FIELDS, ElementKind.PROPERTIES,
+            ElementKind.CONSTRUCTORS, ElementKind.METHODS};
         RelationType[] relationTypes = { RelationType.Association, RelationType.Association, RelationType.Association,
             RelationType.Dependency, RelationType.Dependency };
         for (int i = 0; i < memberKinds.length; i++) {
@@ -273,7 +273,7 @@ public class CompiledClassImporter {
             class_.addRelation( RelationType.SuperClass, superClass_ );
             class_.addMember(
                     new ParameterizableElement( "extends", "extends", superClass, superGenericType,
-                            Collections.emptyList(), ElementKind.Extends, ElementVisibility.Local ) );
+                            Collections.emptyList(), ElementKind.EXTENDS, ElementVisibility.Local ) );
         }
         // Process eventual type params
         for (TypeVariable paramType : clazz.getTypeParameters()) {
@@ -290,7 +290,7 @@ public class CompiledClassImporter {
             class_.addMember(
                     new ParameterizableElement(
                             "implements" + (i + 1), "implements" + (i + 1), superInterfaces[ i ], superGenericInterfaces[ i ],
-                            Collections.emptyList(), ElementKind.Implements, ElementVisibility.Local ) );
+                            Collections.emptyList(), ElementKind.IMPLEMENTS, ElementVisibility.Local ) );
         }
 
         for (Class usedSuperInterface : superInterfaces) {
@@ -350,14 +350,14 @@ public class CompiledClassImporter {
                 // Create constant
                 attribute = new ParameterizableElement(
                         field.toString(), name, field.getType(), field.getGenericType(), elementModifiers,
-                        ElementKind.Constants, getVisibility( elementModifiers ) );
+                        ElementKind.CONSTANTS, getVisibility( elementModifiers ) );
             } else {
                 // Create attribute
                 // FIX: should use field.toGenericString() as id, but it fails sometimes
                 // - i.e. on com.sun.tools.internal.xjc.api.impl.j2s.JAXBModelImpl
                 attribute = new ParameterizableElement(
                         field.toString(), name, field.getType(), field.getGenericType(), elementModifiers,
-                        ElementKind.Fields, getVisibility( elementModifiers ) );
+                        ElementKind.FIELDS, getVisibility( elementModifiers ) );
             }
 
             class_.addMember( attribute );
@@ -446,7 +446,7 @@ public class CompiledClassImporter {
                 // Create property
                 ParameterizableElement property = new ParameterizableElement(
                         method.toGenericString(), attributeName, method.getReturnType(), method.getGenericReturnType(),
-                        elementModifiers, ElementKind.Properties, getVisibility( elementModifiers ) );
+                        elementModifiers, ElementKind.PROPERTIES, getVisibility( elementModifiers ) );
                 property.annotations.addAll( annotations );
                 class_.addMember( property );
 
@@ -470,7 +470,7 @@ public class CompiledClassImporter {
                     method.getGenericReturnType(),
                     decodeModifiers( method.getModifiers(), method ),
                     method,
-                    ElementKind.Methods,
+                    ElementKind.METHODS,
                     class_ );
         } // loop2: method
 
@@ -490,7 +490,7 @@ public class CompiledClassImporter {
                     void.class,
                     decodeModifiers( method.getModifiers(), method ),
                     method,
-                    ElementKind.Constructors,
+                    ElementKind.CONSTRUCTORS,
                     class_ );
         }
     }
@@ -516,7 +516,7 @@ public class CompiledClassImporter {
                             methodParam.getName(),
                             methodParam.getName(), methodParam.getType(), methodParam.getParameterizedType(),
                             decodeModifiers( methodParam.getModifiers(), methodParam ),
-                            ElementKind.Parameters, ElementVisibility.Local );
+                            ElementKind.PARAMETERS, ElementVisibility.Local );
             // Protection from AIOOBE caused by wrong signatures
             importAnnotations( methodParam.getAnnotations(), parameter.annotations );
             parameters.add( parameter );
@@ -532,7 +532,7 @@ public class CompiledClassImporter {
                     new ParameterizableElement(
                             String.format( "[%d] %s", (i + 1), exceptionTypes[ i ].getCanonicalName() ),
                             "e" + (i + 1), exceptionTypes[ i ], exceptionTypes[ i ], Collections.emptyList(),
-                            ElementKind.Throws, ElementVisibility.Local ) );
+                            ElementKind.THROWS, ElementVisibility.Local ) );
         }
         // Create operation
         Operation operation = new Operation( id, methodName, methodType, methodGenericType, modifiers,
@@ -607,22 +607,22 @@ public class CompiledClassImporter {
 
     private static ElementKind getKind(Collection<ElementModifier> modifiers, Class clazz) {
         if (modifiers.contains( ElementModifier.Annotation )) {
-            return ElementKind.AnnotationType;
+            return ElementKind.ANNOTATION_TYPE;
         }
         if (modifiers.contains( ElementModifier.Interface )) {
-            return ElementKind.Interface;
+            return ElementKind.INTERFACE;
         }
         if (modifiers.contains( ElementModifier.Enum )) {
-            return ElementKind.Enum;
+            return ElementKind.ENUM;
         }
         // Check if throwable
         while (clazz.getSuperclass() != null && !Object.class.getName().equals( clazz.getSuperclass().getName() )) {
             clazz = clazz.getSuperclass();
         }
         if (Throwable.class.getName().equals( clazz.getName() )) {
-            return ElementKind.Throwable;
+            return ElementKind.THROWABLE;
         }
-        return ElementKind.Class;
+        return ElementKind.CLASS;
     }
 
     private static ElementVisibility getVisibility(Collection<ElementModifier> modifiers) {
