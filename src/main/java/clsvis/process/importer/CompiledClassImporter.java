@@ -61,25 +61,25 @@ public class CompiledClassImporter {
     private static final Logger logger = Logger.getLogger( CompiledClassImporter.class.getName() );
 
     private static final Set<ElementModifier> generalModifiers = Collections.unmodifiableSet( EnumSet.of(
-            ElementModifier.Public, ElementModifier.Protected, ElementModifier.Private,
-            ElementModifier.Abstract, ElementModifier.Static, ElementModifier.Final,
-            ElementModifier.Transient, ElementModifier.Volatile, ElementModifier.Synchronized,
-            ElementModifier.Native, ElementModifier.Strict ) );
+            ElementModifier.PUBLIC, ElementModifier.PROTECTED, ElementModifier.PRIVATE,
+            ElementModifier.ABSTRACT, ElementModifier.STATIC, ElementModifier.FINAL,
+            ElementModifier.TRANSIENT, ElementModifier.VOLATILE, ElementModifier.SYNCHRONIZED,
+            ElementModifier.NATIVE, ElementModifier.STRICT) );
     private static final Set<ElementModifier> constantModifiers = Collections.unmodifiableSet( EnumSet.of(
-            ElementModifier.Static, ElementModifier.Final ) );
+            ElementModifier.STATIC, ElementModifier.FINAL) );
     private static final Set<ElementModifier> classModifiers = Collections.unmodifiableSet( EnumSet.of(
-            ElementModifier.Interface, ElementModifier.Enum, ElementModifier.Annotation,
-            ElementModifier.Record, ElementModifier.Sealed,
-            ElementModifier.LocalClass, ElementModifier.MemberClass,
-            ElementModifier.Synthetic ) );
+            ElementModifier.INTERFACE, ElementModifier.ENUM, ElementModifier.ANNOTATION,
+            ElementModifier.RECORD, ElementModifier.SEALED,
+            ElementModifier.LOCAL_CLASS, ElementModifier.MEMBER_CLASS,
+            ElementModifier.SYNTHETIC) );
     public static final Set<ElementModifier> fieldModifiers = Collections.unmodifiableSet( EnumSet.of(
-            ElementModifier.Synthetic ) );
+            ElementModifier.SYNTHETIC) );
     public static final Set<ElementModifier> constructorModifiers = Collections.unmodifiableSet( EnumSet.of(
-            ElementModifier.Synthetic ) );
+            ElementModifier.SYNTHETIC) );
     private static final Set<ElementModifier> methodModifiers = Collections.unmodifiableSet( EnumSet.of(
-            ElementModifier.Synthetic, ElementModifier.Bridge, ElementModifier.Default ) );
+            ElementModifier.SYNTHETIC, ElementModifier.BRIDGE, ElementModifier.DEFAULT) );
     public static final Set<ElementModifier> parameterModifiers = Collections.unmodifiableSet( EnumSet.of(
-            ElementModifier.Implicit, ElementModifier.Synthetic, ElementModifier.VarArgs ) );
+            ElementModifier.IMPLICIT, ElementModifier.SYNTHETIC, ElementModifier.VAR_ARGS) );
 
     /** Map[ElementKind] = RelationType */
     private static final EnumMap<ElementKind, RelationType> memberKindRelations = new EnumMap<>( ElementKind.class );
@@ -396,7 +396,7 @@ public class CompiledClassImporter {
             boolean getterFound
                     = accessorMatcher.matches()
                     && method.getParameterTypes().length == 0
-                    && !elementModifiers.contains( ElementModifier.Static );
+                    && !elementModifiers.contains( ElementModifier.STATIC);
             if (getterFound) {
                 // Property found
                 // Look for eventual matching setter
@@ -410,7 +410,7 @@ public class CompiledClassImporter {
                     Set<ElementModifier> setterVisibility = EnumSet.copyOf( ElementModifier.visibilityModifiers );
                     setterVisibility.retainAll( setterModifiers );
                     setterFound
-                            = !setterModifiers.contains( ElementModifier.Static )
+                            = !setterModifiers.contains( ElementModifier.STATIC)
                             && setterVisibility.equals( getterVisibility );
                     if (setterFound) {
                         elementModifiers.addAll( setterModifiers );
@@ -423,7 +423,7 @@ public class CompiledClassImporter {
 
                 // Is it read-only property?
                 if (!setterFound) {
-                    elementModifiers.add( ElementModifier.ReadOnly );
+                    elementModifiers.add( ElementModifier.READ_ONLY);
                 }
 
                 // Look for eventual matching attribute
@@ -606,13 +606,13 @@ public class CompiledClassImporter {
     }
 
     private static ElementKind getKind(Collection<ElementModifier> modifiers, Class clazz) {
-        if (modifiers.contains( ElementModifier.Annotation )) {
+        if (modifiers.contains( ElementModifier.ANNOTATION)) {
             return ElementKind.ANNOTATION_TYPE;
         }
-        if (modifiers.contains( ElementModifier.Interface )) {
+        if (modifiers.contains( ElementModifier.INTERFACE)) {
             return ElementKind.INTERFACE;
         }
-        if (modifiers.contains( ElementModifier.Enum )) {
+        if (modifiers.contains( ElementModifier.ENUM)) {
             return ElementKind.ENUM;
         }
         // Check if throwable
@@ -626,13 +626,13 @@ public class CompiledClassImporter {
     }
 
     private static ElementVisibility getVisibility(Collection<ElementModifier> modifiers) {
-        if (modifiers.contains( ElementModifier.Public )) {
+        if (modifiers.contains( ElementModifier.PUBLIC)) {
             return ElementVisibility.Public;
         }
-        if (modifiers.contains( ElementModifier.Protected )) {
+        if (modifiers.contains( ElementModifier.PROTECTED)) {
             return ElementVisibility.Protected;
         }
-        if (modifiers.contains( ElementModifier.Private )) {
+        if (modifiers.contains( ElementModifier.PRIVATE)) {
             return ElementVisibility.Private;
         }
         return ElementVisibility.Package;

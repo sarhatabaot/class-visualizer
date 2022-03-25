@@ -56,11 +56,11 @@ public abstract class LangElement implements Comparable<LangElement> {
     }
 
     public boolean isAbstract() {
-        return modifiers.contains( ElementModifier.Abstract );
+        return modifiers.contains( ElementModifier.ABSTRACT);
     }
 
     public boolean isStatic() {
-        return modifiers.contains( ElementModifier.Static );
+        return modifiers.contains( ElementModifier.STATIC);
     }
 
     public String getStereotypesAsString(String separator, boolean withoutAbstractAndStatic) {
@@ -71,8 +71,8 @@ public abstract class LangElement implements Comparable<LangElement> {
 
         for (ElementModifier modifier : modifiers) {
             if (ElementModifier.visibilityModifiers.contains( modifier )
-                    || modifier == ElementModifier.Abstract && withoutAbstractAndStatic
-                    || modifier == ElementModifier.Static && withoutAbstractAndStatic) {
+                    || modifier == ElementModifier.ABSTRACT && withoutAbstractAndStatic
+                    || modifier == ElementModifier.STATIC && withoutAbstractAndStatic) {
                 continue;
             }
             sb.append( "<span color=" ).append( ColorContext.UmlStereotype.colorStr ).append( ">\u00ab" )

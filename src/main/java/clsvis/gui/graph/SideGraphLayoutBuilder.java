@@ -301,8 +301,8 @@ class SideGraphLayoutBuilder {
             // Realization or dependency: dashed line, otherwise: solid line
             edge.lineStyle
                     = isVerticalOrientation( edge )
-                    && !edge.fromVertex.class_.modifiers.contains( ElementModifier.Interface )
-                    && edge.toVertex.class_.modifiers.contains( ElementModifier.Interface )
+                    && !edge.fromVertex.class_.modifiers.contains( ElementModifier.INTERFACE)
+                    && edge.toVertex.class_.modifiers.contains( ElementModifier.INTERFACE)
                     || edge.relationType == RelationType.Dependency
                     || edge.relationType == RelationType.DependencyThrows
                     || edge.relationType == RelationType.DependencyAnnotation

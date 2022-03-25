@@ -98,7 +98,7 @@ public class Class_ extends ParameterizableElement {
     public void addSuperInterface(Class_ class_) {
         addRelation( RelationType.SuperInterface, class_, RelationDirection.Outbound );
         class_.addRelation(
-                modifiers.contains( ElementModifier.Interface ) ? RelationType.SuperInterface : RelationType.SuperClass,
+                modifiers.contains( ElementModifier.INTERFACE) ? RelationType.SuperInterface : RelationType.SuperClass,
                 this, RelationDirection.Inbound );
     }
 

@@ -14,40 +14,40 @@ import java.util.Set;
  * @see java.lang.reflect.Modifier
  */
 public enum ElementModifier {
-    Public,
-    Protected,
-    Private,
-    Abstract,
-    Static,
-    Final,
-    Transient,
-    Volatile,
-    Synchronized,
-    Native,
-    Strict, // TODO: should be represented as strictfp
-    ReadOnly,
+    PUBLIC,
+    PROTECTED,
+    PRIVATE,
+    ABSTRACT,
+    STATIC,
+    FINAL,
+    TRANSIENT,
+    VOLATILE,
+    SYNCHRONIZED,
+    NATIVE,
+    STRICT, // TODO: should be represented as strictfp
+    READ_ONLY,
     //WriteOnly,
-    Interface,
-    Enum, // TODO: should be presented as "enumeration"
-    Annotation,
-    Record,
-    Sealed,
-    Throwable,
-    LocalClass,
-    MemberClass,
-    Synthetic,
-    Bridge,
-    Default,
-    Implicit,
-    VarArgs,
+    INTERFACE,
+    ENUM, // TODO: should be presented as "enumeration"
+    ANNOTATION,
+    RECORD,
+    SEALED,
+    THROWABLE,
+    LOCAL_CLASS,
+    MEMBER_CLASS,
+    SYNTHETIC,
+    BRIDGE,
+    DEFAULT,
+    IMPLICIT,
+    VAR_ARGS,
     ;
 
     public static final Set<ElementModifier> visibilityModifiers = Collections.unmodifiableSet( EnumSet.of(
-            ElementModifier.Private, ElementModifier.Protected, ElementModifier.Public ) );
+            ElementModifier.PRIVATE, ElementModifier.PROTECTED, ElementModifier.PUBLIC) );
 
     private final String asString;
 
-    private ElementModifier() {
+    ElementModifier() {
         asString = Introspector.decapitalize( name() );
     }
 

@@ -59,7 +59,6 @@ import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
-import javax.swing.RowFilter.Entry;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.TransferHandler;
@@ -863,7 +862,7 @@ public class MainFrame extends JFrame {
         // build path from Class_es
         Class_ class_ = (Class_) userObject;
         // Only classes are handled
-        if (class_.modifiers.contains( ElementModifier.Interface )) {
+        if (class_.modifiers.contains( ElementModifier.INTERFACE)) {
             return;
         }
         ArrayList<Class_> classPath = new ArrayList<>();
