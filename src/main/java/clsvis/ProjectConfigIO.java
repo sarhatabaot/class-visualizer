@@ -46,8 +46,8 @@ public interface ProjectConfigIO {
                                     ? Collections.emptyList()
                                     : Arrays.stream( vals[ 1 ].split( ", " ) )
                                             .filter( fileName -> !fileName.isEmpty() )
-                                            .map( fileName -> new File( fileName ) )
-                                            .collect( Collectors.toList() )
+                                            .map(File::new)
+                                            .toList()
                     ) );
             return new ProjectConfig(
                     path,

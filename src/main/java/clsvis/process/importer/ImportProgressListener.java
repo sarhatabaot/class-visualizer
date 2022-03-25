@@ -10,5 +10,5 @@ public interface ImportProgressListener {
     /**
      * Notification about import progress: importedCount out of totalCount.
      */
-    public void importProgress(int importedCount, int totalCount);
+    void importProgress(int importedCount, int totalCount);
 }

@@ -37,11 +37,11 @@ public enum ElementKind {
     private static final String MEMBER_TEMPLATE = "<span color=%s>&nbsp;<code>%c</code> </span>";
     private static final char CLASS_INDICATOR = '\0';
 
-    private ElementKind(int color) {
+    ElementKind(int color) {
         this( color, CLASS_INDICATOR );
     }
 
-    private ElementKind(int color, char symbol) {
+    ElementKind(int color, char symbol) {
         this.colorNum = color;
         String template;
         if (symbol == CLASS_INDICATOR) {

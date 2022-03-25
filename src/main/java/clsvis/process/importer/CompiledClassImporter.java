@@ -35,6 +35,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -166,11 +167,8 @@ public class CompiledClassImporter {
             // Class added for loading cannot be load - serious damage
             processThrowable( Level.SEVERE, e, className );
             throw new ImportException( e );
-        } catch (LinkageError e) {
+        } catch (LinkageError | RuntimeException e) {
             // Something wrong with loaded class - normal situation
-            processThrowable( Level.WARNING, e, className );
-            notImportedClassNames.add( className );
-        } catch (RuntimeException e) {
             processThrowable( Level.WARNING, e, className );
             notImportedClassNames.add( className );
         } catch (Error e) {
@@ -198,7 +196,7 @@ public class CompiledClassImporter {
         }
 
         // Eventual parameterized types of class itself
-        addRelations( class_, Arrays.asList( class_ ), RelationType.Dependency );
+        addRelations( class_, List.of(class_), RelationType.Dependency );
 
         // Discover relations of inner classes
         for (Class_ innerClass : class_.getRelations( RelationType.InnerClass, RelationDirection.Outbound )) {
@@ -275,7 +273,7 @@ public class CompiledClassImporter {
             class_.addRelation( RelationType.SuperClass, superClass_ );
             class_.addMember(
                     new ParameterizableElement( "extends", "extends", superClass, superGenericType,
-                            Collections.EMPTY_LIST, ElementKind.Extends, ElementVisibility.Local ) );
+                            Collections.emptyList(), ElementKind.Extends, ElementVisibility.Local ) );
         }
         // Process eventual type params
         for (TypeVariable paramType : clazz.getTypeParameters()) {
@@ -292,7 +290,7 @@ public class CompiledClassImporter {
             class_.addMember(
                     new ParameterizableElement(
                             "implements" + (i + 1), "implements" + (i + 1), superInterfaces[ i ], superGenericInterfaces[ i ],
-                            Collections.EMPTY_LIST, ElementKind.Implements, ElementVisibility.Local ) );
+                            Collections.emptyList(), ElementKind.Implements, ElementVisibility.Local ) );
         }
 
         for (Class usedSuperInterface : superInterfaces) {
@@ -533,14 +531,14 @@ public class CompiledClassImporter {
             throwables.add(
                     new ParameterizableElement(
                             String.format( "[%d] %s", (i + 1), exceptionTypes[ i ].getCanonicalName() ),
-                            "e" + (i + 1), exceptionTypes[ i ], exceptionTypes[ i ], Collections.EMPTY_LIST,
+                            "e" + (i + 1), exceptionTypes[ i ], exceptionTypes[ i ], Collections.emptyList(),
                             ElementKind.Throws, ElementVisibility.Local ) );
         }
         // Create operation
         Operation operation = new Operation( id, methodName, methodType, methodGenericType, modifiers,
                 elementKind, getVisibility( modifiers ),
-                parameters.isEmpty() ? Collections.EMPTY_LIST : parameters,
-                throwables.isEmpty() ? Collections.EMPTY_LIST : throwables );
+                parameters.isEmpty() ? Collections.emptyList() : parameters,
+                throwables.isEmpty() ? Collections.emptyList() : throwables );
         importAnnotations( method.getDeclaredAnnotations(), operation.annotations );
         class_.addMember( operation );
 
@@ -560,7 +558,7 @@ public class CompiledClassImporter {
     private static void importTypeParameters(
             Type declaredType, Class classExclusion, Collection<String> typeParameters) {
         if (declaredType instanceof Type && !(declaredType instanceof Class)) {
-            importTypeParameters( declaredType, classExclusion, typeParameters, Collections.EMPTY_LIST );
+            importTypeParameters( declaredType, classExclusion, typeParameters, Collections.emptyList() );
         }
     }
 
@@ -583,14 +581,12 @@ public class CompiledClassImporter {
             if (!classExclusion.getName().equals( typeName ) && !typeParameters.contains( typeName )) {
                 typeParameters.add( typeName );
             }
-        } else if (declaredType instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType) declaredType;
+        } else if (declaredType instanceof ParameterizedType parameterizedType) {
             importTypeParameters( parameterizedType.getRawType(), classExclusion, typeParameters, lHistory );
             for (Type actualTypeArg : parameterizedType.getActualTypeArguments()) {
                 importTypeParameters( actualTypeArg, classExclusion, typeParameters, lHistory );
             }
-        } else if (declaredType instanceof WildcardType) {
-            WildcardType wildcardType = (WildcardType) declaredType;
+        } else if (declaredType instanceof WildcardType wildcardType) {
             // Take lower bounds if exist (upper=Object - ignored), upper bounds otherwise
             boolean lowerBoundsExist = wildcardType.getLowerBounds().length > 0;
             Type[] bounds = lowerBoundsExist
@@ -598,11 +594,9 @@ public class CompiledClassImporter {
             for (Type actualTypeArg : bounds) {
                 importTypeParameters( actualTypeArg, classExclusion, typeParameters, lHistory );
             }
-        } else if (declaredType instanceof GenericArrayType) {
-            GenericArrayType genericArrayType = (GenericArrayType) declaredType;
+        } else if (declaredType instanceof GenericArrayType genericArrayType) {
             importTypeParameters( genericArrayType.getGenericComponentType(), classExclusion, typeParameters, lHistory );
-        } else if (declaredType instanceof TypeVariable) {
-            TypeVariable typeVariable = (TypeVariable) declaredType;
+        } else if (declaredType instanceof TypeVariable typeVariable) {
             Type[] bounds = typeVariable.getBounds();
             for (Type actualTypeArg : bounds) {
                 importTypeParameters( actualTypeArg, classExclusion, typeParameters, lHistory );
@@ -692,9 +686,9 @@ public class CompiledClassImporter {
             }
             // Cleanup
             element.typeParameters.clear();
-            element.typeParameters = Collections.EMPTY_LIST;
+            element.typeParameters = Collections.emptyList();
             if (element.annotations.isEmpty()) {
-                element.annotations = Collections.EMPTY_LIST;
+                element.annotations = Collections.emptyList();
             }
         } //loop
     }

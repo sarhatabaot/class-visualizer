@@ -153,7 +153,7 @@ public class BaseProjectImporter {
         checkPathExists( path );
 
         if (path.isDirectory()) {
-            findClassNamesInDirectory( path, Collections.EMPTY_LIST );
+            findClassNamesInDirectory( path, Collections.emptyList() );
         } else if (path.getName().endsWith( jarFileName )) {
             findClassNamesInJarFile( path );
         } else {
@@ -221,7 +221,7 @@ public class BaseProjectImporter {
                         String.format( "Problem during processing classpath entry '%s':", classPath.getPath() ), ex );
             }
         }
-        URLClassLoader classLoader = new URLClassLoader( classpathURLs.toArray( new URL[classpathURLs.size()] ) );
+        URLClassLoader classLoader = new URLClassLoader( classpathURLs.toArray(new URL[0]) );
         classImporter.setClassLoader( classLoader );
     }
 

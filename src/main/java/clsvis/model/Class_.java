@@ -80,11 +80,7 @@ public class Class_ extends ParameterizableElement {
 
     public void addMember(ParameterizableElement element) {
         ElementKind memberKind = element.kind;
-        List<ParameterizableElement> members = membersMap.get( memberKind );
-        if (members == null) {
-            members = new LinkedList<>();
-            membersMap.put( memberKind, members );
-        }
+        List<ParameterizableElement> members = membersMap.computeIfAbsent(memberKind, k -> new LinkedList<>());
         members.add( element );
     }
 
@@ -129,14 +125,14 @@ public class Class_ extends ParameterizableElement {
             if (memberList != null) {
                 Collections.sort( memberList );
             } else {
-                membersMap.put( elementKind, Collections.EMPTY_LIST );
+                membersMap.put( elementKind, Collections.emptyList() );
             }
         }
         // super class, super ifaces, inner classes
         for (RelationType relType : IMMUTABLE_RELATIONS) {
             Collection<Class_> classesSet = relationsMap.get( RelationDirection.Outbound ).get( relType );
             relationsMap.get( RelationDirection.Outbound ).put( relType,
-                    classesSet.isEmpty() ? Collections.EMPTY_LIST : new ArrayList<>( classesSet ) );
+                    classesSet.isEmpty() ? Collections.emptyList() : new ArrayList<>( classesSet ) );
         }
     }
 
@@ -149,11 +145,11 @@ public class Class_ extends ParameterizableElement {
         // outer class
         Collection<Class_> outerClassesSet = relationsMap.get( RelationDirection.Inbound ).get( RelationType.InnerClass );
         relationsMap.get( RelationDirection.Inbound ).put( RelationType.InnerClass,
-                outerClassesSet.isEmpty() ? Collections.EMPTY_LIST : new ArrayList<>( outerClassesSet ) );
+                outerClassesSet.isEmpty() ? Collections.emptyList() : new ArrayList<>( outerClassesSet ) );
         // outbound relations
         for (RelationType relType : RelationType.values()) {
             if (relationsMap.get( RelationDirection.Outbound ).get( relType ).isEmpty()) {
-                relationsMap.get( RelationDirection.Outbound ).put( relType, Collections.EMPTY_LIST );
+                relationsMap.get( RelationDirection.Outbound ).put( relType, Collections.emptyList() );
             }
         }
         // TODO: process inbounds according to final
